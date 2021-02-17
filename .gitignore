@@ -4,3 +4,4 @@ Project Erilum JS Files/ServerConfigFiles/*.json
 
 # Ignoring IntelliJ IDEA Folders
 .idea/
+*.iml
