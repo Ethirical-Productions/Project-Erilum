@@ -1,0 +1,9 @@
+{
+  "onlineMembersEnabled": false,
+  "onlineMembersChannelID": 0,
+  "totalMembersEnabled": false,
+  "totalMembersChannelID": 0,
+  "outputChannelID": 0,
+  "outputChannelEnabled": false,
+  "setupRan": false
+}

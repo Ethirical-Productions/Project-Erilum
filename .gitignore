@@ -1,6 +1,7 @@
 # Ignoring Config and Server Data
 Project Erilum JS Files/*.json
 Project Erilum JS Files/ServerConfigFiles/*.json
+!Project Erilum JS Files/ServerConfigFiles/defaultTemplate.json
 
 # Ignoring IntelliJ IDEA Folders
 .idea/
