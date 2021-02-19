@@ -45,6 +45,7 @@ module.exports = {
         }
 
         function setup(msg) {
+            const config = require('./config.json');
             try {
                 fs.copyFileSync("./Project Erilum JS Files/ServerConfigFiles/defaultTemplate.json", "./Project Erilum JS Files/ServerConfigFiles/" + msg.guild.id.toString() + ".json");
                 let serverFileRAW = fs.readFileSync("./Project Erilum JS Files/ServerConfigFiles/" + msg.guild.id.toString() + ".json");

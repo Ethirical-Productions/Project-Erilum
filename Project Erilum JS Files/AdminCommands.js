@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('./config.json')
+const config = require('./config.json');
 const fs = require('fs');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
@@ -17,9 +17,18 @@ bot.once('ready', () => {
 });
 
 bot.on('message', message => {
-    if (!message.content.startsWith(`${config.prefix}`)) {return;}
+    let prefix
 
-    const args = message.content.slice(`${config.prefix}`.length).trim().split(/ +/);
+    try {
+        let serverFile = JSON.parse(fs.readFileSync("./Project Erilum JS Files/ServerConfigFiles/" + message.guild.id.toString() + ".json").toString());
+        prefix = serverFile.prefix;
+    } catch {
+        prefix = config.prefix;
+    }
+
+    if (!message.content.startsWith(prefix)) { return; }
+
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
 
     if (!bot.commands.has(command)) {
@@ -34,7 +43,5 @@ bot.on('message', message => {
         message.reply("There was an error trying to execute that command! :(").then(r => null);
     }
 })
-
-
 
 bot.login(config.token).then(r => null);

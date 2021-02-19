@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('./config.json')
+const config = require('./config.json');
 const fs = require('fs');
 const bot = new Discord.Client();
 
@@ -8,7 +8,6 @@ bot.once('ready', () => {
     startAllProcesses();
 });
 
-
 function startAllProcesses() {
     presenceUpdate().then(r => null);
 }
@@ -16,7 +15,6 @@ function startAllProcesses() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 async function presenceUpdate() {
     while (1 === 1) {

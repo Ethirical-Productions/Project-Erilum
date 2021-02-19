@@ -5,5 +5,6 @@
   "totalMembersChannelID": 0,
   "outputChannelID": 0,
   "outputChannelEnabled": false,
+  "prefix": "//",
   "setupRan": false
 }

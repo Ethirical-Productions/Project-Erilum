@@ -8,14 +8,10 @@ module.exports = {
         if (sender.hasPermission("ADMINISTRATOR")) {
             message.channel.send("TBC");
             fs.stat("./Project Erilum JS Files/ServerConfigFiles/" + message.guild.id.toString() + ".json", (error, stats) => {
-                if (error) { message.channel.send( "Setup has not been completed! Start it with //setup \nError Occurred: " + error) } else {
+                if (error) { message.channel.send( "Setup has not been completed! Start it with //setup \nError: " + error) } else {
                     if (stats.isFile()) {
-                        let serverFileRAW = fs.readFileSync("./Project Erilum JS Files/ServerConfigFiles/" + message.guild.id.toString() + ".json");
-                        let serverFile = JSON.parse(serverFileRAW.toString());
-                        let output1 = null;
-                        let output2 = null;
-                        if (serverFile.onlineMembersChannelID === 0) { output1 = "No Channel Selected" } else { output1 = `${serverFile.onlineMembersChannelID}` }
-                        if (serverFile.totalMembersChannelID === 0) { output2 = "No Channel Selected" } else { output2 = `${serverFile.totalMembersChannelID}` }
+                        let serverFile = JSON.parse(fs.readFileSync("./Project Erilum JS Files/ServerConfigFiles/" + message.guild.id.toString() + ".json").toString());
+
                         let settingsPage1 = new Discord.MessageEmbed()
                             .setTitle(message.guild.name + " Settings Page 1/1")
                             .setAuthor("Project Erilum")
@@ -24,10 +20,11 @@ module.exports = {
                             .setFooter("© Ethirical Productions")
                             .setTimestamp()
 
-                            .addField("Show User Presence Data", `${serverFile.onlineMembersEnabled} - //SetPresence [Boolean]`, true)
-                            .addField("Channel to use for Presence Data", output1 + " - //SetPresenceChannel [ChannelID]", true)
-                            .addField("Show Total Users Data", `${serverFile.totalMembersEnabled} - //SetTotalMembers [Boolean]`, true)
-                            .addField("Channel to use for Total Users Data", output2 + " - //SetTotalMembersChannel [ChannelID]", true);
+                            .addField("Show User Presence Data", `${serverFile.onlineMembersEnabled} - ${serverFile.prefix}SetPresence [Boolean]`, true)
+                            .addField("Channel to use for Presence Data", OnlineMembersOutput(serverFile) + ` - ${serverFile.prefix}SetPresenceChannel [ChannelID]`, true)
+                            .addField("Show Total Users Data", `${serverFile.totalMembersEnabled} - ${serverFile.prefix}SetTotalMembers [Boolean]`, true)
+                            .addField("Channel to use for Total Users Data", TotalMemberCountOutput(serverFile) + ` - ${serverFile.prefix}SetTotalMembersChannel [ChannelID]`, true)
+                            .addField("Set New Command Prefix", `${serverFile.prefix} - ${serverFile.prefix}UpdatePrefix [Upto 2 Characters or Symbols]`, true);
 
                         message.channel.send(settingsPage1);
 
@@ -36,10 +33,24 @@ module.exports = {
                     }
                 }
             });
-
-
         } else {
             message.channel.send("Sorry, you do not have Permissions for that command!");
         }
     },
 };
+
+function OnlineMembersOutput(serverFile) {
+    if (serverFile.onlineMembersChannelID === 0) {
+        return "No Channel Selected";
+    } else {
+        return `${serverFile.onlineMembersChannelID}`;
+    }
+}
+
+function TotalMemberCountOutput(serverFile) {
+    if (serverFile.onlineMembersChannelID === 0) {
+        return "No Channel Selected";
+    } else {
+        return `${serverFile.totalMembersChannelID}`;
+    }
+}
